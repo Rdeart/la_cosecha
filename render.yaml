@@ -1,0 +1,27 @@
+# Un solo Web Service: API + interfaz, conservando el backend y frontend originales.
+# Para el servicio YA creado, actualiza manualmente Build Command y Start Command
+# en Dashboard > Settings. Cambiar este archivo solo no cambia la configuracion
+# de un servicio creado manualmente.
+services:
+  - type: web
+    name: la-cosecha
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-render.txt
+    startCommand: uvicorn render_web:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_NOMBRE
+        sync: false
+      - key: ADMIN_CORREO
+        sync: false
+      - key: ADMIN_CONTRASENA
+        sync: false
+      - key: ECHO_SQL
+        value: 'false'
